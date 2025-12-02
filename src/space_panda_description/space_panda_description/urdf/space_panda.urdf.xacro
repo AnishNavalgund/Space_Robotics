@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<robot name="space_panda" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- Load generic Franka robot macro -->
+  <xacro:include filename="$(find franka_description)/robots/common/franka_robot.xacro"/>
+
+  <!-- Parameters -->
+  <xacro:property name="load_gripper" value="true"/>
+  <xacro:property name="ee_id" value="franka_hand"/>
+
+  <link name="satellite_base">
+    <visual>
+      <geometry>
+        <box size="1 1 0.5"/>
+      </geometry>
+      <material name="grey">
+        <color rgba="0.6 0.6 0.6 1.0"/>
+      </material>
+    </visual>
+
+    <collision>
+      <geometry>
+        <box size="1 1 0.5"/>
+      </geometry>
+    </collision>
+
+    <inertial>
+      <mass value="500.0"/>
+      <origin xyz="0 0 0"/>
+      <inertia
+        ixx="20" ixy="0" ixz="0"
+        iyy="20" iyz="0"
+        izz="20"/>
+    </inertial>
+  </link>
+
+  <!-- Joint between satellite and Franka base -->
+  <joint name="satellite_to_franka" type="fixed">
+    <origin xyz="0 0 0.25" rpy="0 0 0"/>
+    <parent link="satellite_base"/>
+    <child link="fr3_link0"/>
+  </joint>
+
+  <xacro:franka_robot
+    arm_id="fr3"
+    joint_limits="${xacro.load_yaml('$(find franka_description)/robots/fr3/joint_limits.yaml')}"
+    inertials="${xacro.load_yaml('$(find franka_description)/robots/fr3/inertials.yaml')}"
+    kinematics="${xacro.load_yaml('$(find franka_description)/robots/fr3/kinematics.yaml')}"
+    accelerometer_config="${xacro.load_yaml('$(find franka_description)/robots/fr3/accelerometers.yaml')}"
+    dynamics="${xacro.load_yaml('$(find franka_description)/robots/fr3/dynamics.yaml')}"
+    hand="${load_gripper}"
+    ee_id="${ee_id}"
+    connected_to=""/>
+
+</robot>
