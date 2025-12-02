@@ -7,11 +7,21 @@ setup(
     version="0.0.0",
     packages=[package_name],
     data_files=[
-        ("share/ament_index/resource_index/packages",
-         ["resource/" + package_name]),
+        (
+            "share/ament_index/resource_index/packages",
+            ["resource/" + package_name],
+        ),
         ("share/" + package_name, ["package.xml"]),
-        ("share/" + package_name + "/urdf", ["space_panda_description/urdf/space_panda.urdf.xacro"]),
-        ("share/" + package_name + "/launch", ["space_panda_description/launch/view_space_panda.launch.py"]),
+        (
+            "share/" + package_name + "/urdf",
+            ["space_panda_description/urdf/space_panda.urdf.xacro"],
+        ),
+        (
+            "share/" + package_name + "/launch",
+            ["space_panda_description/launch/view_space_panda.launch.py"],
+        ),
+        # Install meshes so package://space_panda_description/meshes/cubesat.stl resolves
+        ("share/" + package_name + "/meshes", ["meshes/cubesat.stl"]),
     ],
     install_requires=["setuptools"],
     zip_safe=True,

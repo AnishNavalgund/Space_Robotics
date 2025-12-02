@@ -8,19 +8,25 @@
   <xacro:property name="load_gripper" value="true"/>
   <xacro:property name="ee_id" value="franka_hand"/>
 
+  <!-- World frame to anchor the satellite + robot system -->
+  <link name="world"/>
+
+  <!-- Satellite body (realistic mesh) the robot will sit on -->
+  <!-- Uses cubesat mesh from the package's meshes directory -->
   <link name="satellite_base">
     <visual>
       <geometry>
-        <box size="1 1 0.5"/>
+        <mesh filename="package://space_panda_description/meshes/cubesat.stl" scale="0.5 0.5 0.5"/>
       </geometry>
-      <material name="grey">
+      <material name="satellite_grey">
         <color rgba="0.6 0.6 0.6 1.0"/>
       </material>
     </visual>
 
+    <!-- Use same mesh for collision for now; you can swap to a simplified collision mesh later -->
     <collision>
       <geometry>
-        <box size="1 1 0.5"/>
+        <mesh filename="package://space_panda_description/meshes/cubesat.stl" scale="0.5 0.5 0.5"/>
       </geometry>
     </collision>
 
@@ -34,9 +40,18 @@
     </inertial>
   </link>
 
+  <!-- Fix the satellite in the world frame -->
+  <joint name="world_to_satellite" type="fixed">
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <parent link="world"/>
+    <child link="satellite_base"/>
+  </joint>
+
   <!-- Joint between satellite and Franka base -->
+  <!-- Increase z so the robot base sits on top of the satellite mesh, not inside it -->
   <joint name="satellite_to_franka" type="fixed">
-    <origin xyz="0 0 0.25" rpy="0 0 0"/>
+    <!-- Tune this z value based on your cubesat mesh thickness (start with 0.5) -->
+    <origin xyz="0 0 0.75" rpy="0 0 0"/>
     <parent link="satellite_base"/>
     <child link="fr3_link0"/>
   </joint>
