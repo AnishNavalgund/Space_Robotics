@@ -18,9 +18,11 @@ setup(
         ),
         (
             "share/" + package_name + "/launch",
-            ["space_panda_description/launch/view_space_panda.launch.py"],
+            [
+                "space_panda_description/launch/view_space_panda.launch.py",
+                "space_panda_description/launch/gazebo_space_panda.launch.py",
+            ],
         ),
-        # Install meshes so package://space_panda_description/meshes/cubesat.stl resolves
         ("share/" + package_name + "/meshes", ["meshes/cubesat.stl"]),
     ],
     install_requires=["setuptools"],

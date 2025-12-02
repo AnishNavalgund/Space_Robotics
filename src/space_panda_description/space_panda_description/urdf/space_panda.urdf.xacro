@@ -12,11 +12,14 @@
   <link name="world"/>
 
   <!-- Satellite body (realistic mesh) the robot will sit on -->
-  <!-- Uses cubesat mesh from the package's meshes directory -->
+  <!-- Uses cubesat mesh from the package's meshes directory.
+       Use an absolute file:// URI so Gazebo can always resolve it. -->
   <link name="satellite_base">
     <visual>
       <geometry>
-        <mesh filename="package://space_panda_description/meshes/cubesat.stl" scale="0.5 0.5 0.5"/>
+        <mesh
+          filename="file:///home/anish/data/SpaceTS/robotics/space_robotics/src/space_panda_description/meshes/cubesat.stl"
+          scale="0.5 0.5 0.5"/>
       </geometry>
       <material name="satellite_grey">
         <color rgba="0.6 0.6 0.6 1.0"/>
@@ -26,7 +29,9 @@
     <!-- Use same mesh for collision for now; you can swap to a simplified collision mesh later -->
     <collision>
       <geometry>
-        <mesh filename="package://space_panda_description/meshes/cubesat.stl" scale="0.5 0.5 0.5"/>
+        <mesh
+          filename="file:///home/anish/data/SpaceTS/robotics/space_robotics/src/space_panda_description/meshes/cubesat.stl"
+          scale="0.5 0.5 0.5"/>
       </geometry>
     </collision>
 
