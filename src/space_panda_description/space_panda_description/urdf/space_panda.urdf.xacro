@@ -1,24 +1,22 @@
 <?xml version="1.0"?>
 <robot name="space_panda" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-  <!-- Load generic Franka robot macro -->
+  <!-- ✅ ROS 2 SAFE INCLUDE -->
   <xacro:include filename="$(find franka_description)/robots/common/franka_robot.xacro"/>
 
-  <!-- Parameters -->
   <xacro:property name="load_gripper" value="true"/>
   <xacro:property name="ee_id" value="franka_hand"/>
 
-  <!-- World frame to anchor the satellite + robot system -->
+  <!-- ================= WORLD ================= -->
   <link name="world"/>
 
-  <!-- Satellite body (realistic mesh) the robot will sit on -->
-  <!-- Uses cubesat mesh from the package's meshes directory.
-       Use an absolute file:// URI so Gazebo can always resolve it. -->
+  <!-- ================= SATELLITE ================= -->
   <link name="satellite_base">
+
     <visual>
       <geometry>
         <mesh
-          filename="file:///home/anish/data/SpaceTS/robotics/space_robotics/src/space_panda_description/meshes/cubesat.stl"
+          filename="$(find space_panda_description)/meshes/cubesat.stl"
           scale="0.5 0.5 0.5"/>
       </geometry>
       <material name="satellite_grey">
@@ -26,13 +24,12 @@
       </material>
     </visual>
 
-    <!-- Use same mesh for collision for now; you can swap to a simplified collision mesh later -->
+    <!-- ✅ SIMPLE collision for stable physics -->
     <collision>
       <geometry>
-        <mesh
-          filename="file:///home/anish/data/SpaceTS/robotics/space_robotics/src/space_panda_description/meshes/cubesat.stl"
-          scale="0.5 0.5 0.5"/>
+        <box size="0 0 0"/>
       </geometry>
+      <origin xyz="1.4 1.4 1.2"/>
     </collision>
 
     <inertial>
@@ -43,24 +40,28 @@
         iyy="20" iyz="0"
         izz="20"/>
     </inertial>
+
   </link>
 
-  <!-- Fix the satellite in the world frame -->
+  <!-- World → Satellite -->
+  <gazebo reference="satellite_base">
+    <static>true</static>
+  </gazebo>
+
   <joint name="world_to_satellite" type="fixed">
-    <origin xyz="0 0 0" rpy="0 0 0"/>
     <parent link="world"/>
     <child link="satellite_base"/>
   </joint>
 
-  <!-- Joint between satellite and Franka base -->
-  <!-- Increase z so the robot base sits on top of the satellite mesh, not inside it -->
+  <!-- ================= FR3 ROBOT ================= -->
+
   <joint name="satellite_to_franka" type="fixed">
-    <!-- Tune this z value based on your cubesat mesh thickness (start with 0.5) -->
     <origin xyz="0 0 0.75" rpy="0 0 0"/>
     <parent link="satellite_base"/>
     <child link="fr3_link0"/>
   </joint>
 
+  <!-- ✅ ROS 2 SAFE YAML LOADS -->
   <xacro:franka_robot
     arm_id="fr3"
     joint_limits="${xacro.load_yaml('$(find franka_description)/robots/fr3/joint_limits.yaml')}"
@@ -68,8 +69,73 @@
     kinematics="${xacro.load_yaml('$(find franka_description)/robots/fr3/kinematics.yaml')}"
     accelerometer_config="${xacro.load_yaml('$(find franka_description)/robots/fr3/accelerometers.yaml')}"
     dynamics="${xacro.load_yaml('$(find franka_description)/robots/fr3/dynamics.yaml')}"
+
     hand="${load_gripper}"
     ee_id="${ee_id}"
-    connected_to=""/>
+    connected_to=""
+  />
+
+  <!-- ================= ROS2 CONTROL ================= -->
+  <ros2_control name="FR3System" type="system">
+
+    <hardware>
+      <plugin>gazebo_ros2_control/GazeboSystem</plugin>
+    </hardware>
+
+    <!-- Arm joints -->
+    <joint name="fr3_joint1">
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+
+    <joint name="fr3_joint2">
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+
+    <joint name="fr3_joint3">
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+
+    <joint name="fr3_joint4">
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+
+    <joint name="fr3_joint5">
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+
+    <joint name="fr3_joint6">
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+
+    <joint name="fr3_joint7">
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+
+    <!-- ✅ GRIPPER (FIXED MIMIC BUG) -->
+    <joint name="fr3_finger_joint1">
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+    </joint>
+
+    <!-- ✅ Mimic joint MUST NOT have command interface -->
+    <joint name="fr3_finger_joint2">
+      <state_interface name="position"/>
+    </joint>
+
+  </ros2_control>
 
 </robot>

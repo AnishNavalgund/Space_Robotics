@@ -7,18 +7,18 @@ import xacro
 
 
 def generate_launch_description():
-    # Process xacro into URDF
+
     pkg_path = get_package_share_directory("space_panda_description")
     urdf_path = os.path.join(pkg_path, "urdf", "space_panda.urdf.xacro")
+    controllers_yaml = os.path.join(pkg_path, "config", "fr3_controllers.yaml")
+
     robot_description_config = xacro.process_file(urdf_path).toxml()
 
-    # Start Gazebo (gz sim) directly as a subprocess
     gz_sim = ExecuteProcess(
         cmd=["gz", "sim", "-v", "4", "-r", "empty.sdf"],
         output="screen",
     )
 
-    # Robot state publisher to publish TF/robot_description
     robot_state_publisher = Node(
         package="robot_state_publisher",
         executable="robot_state_publisher",
@@ -26,27 +26,46 @@ def generate_launch_description():
         output="screen",
     )
 
-    # Spawn the robot in Gazebo (Ignition / Harmonic) using ros_gz_sim 'create'
-    spawn_entity = Node(
-        package="ros_gz_sim",
-        executable="create",
-        arguments=[
-            "-name",
-            "space_panda",
-            "-topic",
-            "robot_description",
-            "-z",
-            "1.0",  # spawn 1 m above ground
+    ros2_control_node = Node(
+        package="controller_manager",
+        executable="ros2_control_node",
+        parameters=[
+            {"robot_description": robot_description_config},
+            controllers_yaml,
         ],
         output="screen",
     )
 
-    return LaunchDescription(
-        [
-            gz_sim,
-            robot_state_publisher,
-            spawn_entity,
-        ]
+    spawn_entity = Node(
+        package="ros_gz_sim",
+        executable="create",
+        arguments=[
+            "-name", "space_panda",
+            "-string", robot_description_config,   # ✅ USE PARAM DIRECTLY
+            "-z", "0.0",
+        ],
+        output="screen",
     )
 
+    spawn_joint_controller = Node(
+        package="controller_manager",
+        executable="spawner",
+        arguments=["joint_trajectory_controller"],
+        output="screen",
+    )
 
+    spawn_gripper_controller = Node(
+        package="controller_manager",
+        executable="spawner",
+        arguments=["gripper_controller"],
+        output="screen",
+    )
+
+    return LaunchDescription([
+        gz_sim,
+        robot_state_publisher,
+        ros2_control_node,
+        spawn_entity,
+        spawn_joint_controller,
+        spawn_gripper_controller,
+    ])

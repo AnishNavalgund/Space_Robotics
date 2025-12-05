@@ -1,4 +1,6 @@
 from setuptools import setup
+from glob import glob
+import os
 
 package_name = "space_panda_description"
 
@@ -6,31 +8,44 @@ setup(
     name=package_name,
     version="0.0.0",
     packages=[package_name],
+
     data_files=[
-        (
-            "share/ament_index/resource_index/packages",
-            ["resource/" + package_name],
-        ),
-        ("share/" + package_name, ["package.xml"]),
-        (
-            "share/" + package_name + "/urdf",
-            ["space_panda_description/urdf/space_panda.urdf.xacro"],
-        ),
-        (
-            "share/" + package_name + "/launch",
-            [
-                "space_panda_description/launch/view_space_panda.launch.py",
-                "space_panda_description/launch/gazebo_space_panda.launch.py",
-            ],
-        ),
-        ("share/" + package_name + "/meshes", ["meshes/cubesat.stl"]),
+        # Package index
+        ("share/ament_index/resource_index/packages",
+            ["resource/" + package_name]),
+
+        # Package.xml
+        ("share/" + package_name,
+            ["package.xml"]),
+
+        # ✅ URDF
+        ("share/" + package_name + "/urdf",
+            glob("space_panda_description/urdf/*.xacro")),
+
+        # ✅ Launch files
+        ("share/" + package_name + "/launch",
+            glob("space_panda_description/launch/*.launch.py")),
+
+        # ✅ ✅ ✅ MESHES (THIS WAS YOUR MAIN BUG)
+        ("share/" + package_name + "/meshes",
+            glob("meshes/*.stl")),
+
+        # ✅ Controllers YAML
+        ("share/" + package_name + "/config",
+            glob("space_panda_description/config/*.yaml")),
     ],
+
     install_requires=["setuptools"],
     zip_safe=True,
+
     maintainer="anish",
     maintainer_email="anishk.navalgund@gmail.com",
-    description="Space-mounted Franka Panda (FR3) description",
+    description="Space-mounted Franka FR3 description",
     license="Apache-2.0",
-    tests_require=["pytest"],
-    entry_points={},
+
+    entry_points={
+        "console_scripts": [
+            "pick_place_demo = space_panda_description.pick_place_demo:main",
+        ],
+    },
 )
