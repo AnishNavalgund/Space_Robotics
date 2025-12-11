@@ -1,5 +1,5 @@
 from launch import LaunchDescription
-from launch.actions import ExecuteProcess
+from launch.actions import ExecuteProcess, AppendEnvironmentVariable
 from launch_ros.actions import Node
 from ament_index_python.packages import get_package_share_directory
 import os
@@ -11,11 +11,19 @@ def generate_launch_description():
     pkg_path = get_package_share_directory("space_panda_description")
     urdf_path = os.path.join(pkg_path, "urdf", "space_panda.urdf.xacro")
     controllers_yaml = os.path.join(pkg_path, "config", "fr3_controllers.yaml")
+    world_path = os.path.join(pkg_path, "worlds", "space.sdf")
+    models_path = os.path.join(pkg_path, "models")
+
+    # ✅ Add models path to Gazebo resource path
+    set_gz_resource_path = AppendEnvironmentVariable(
+        name="GZ_SIM_RESOURCE_PATH",
+        value=models_path
+    )
 
     robot_description_config = xacro.process_file(urdf_path).toxml()
 
     gz_sim = ExecuteProcess(
-        cmd=["gz", "sim", "-v", "4", "-r", "empty.sdf"],
+        cmd=["gz", "sim", "-v", "4", "-r", world_path],
         output="screen",
     )
 
@@ -62,6 +70,7 @@ def generate_launch_description():
     )
 
     return LaunchDescription([
+        set_gz_resource_path,
         gz_sim,
         robot_state_publisher,
         ros2_control_node,

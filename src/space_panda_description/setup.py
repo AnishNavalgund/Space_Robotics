@@ -33,6 +33,25 @@ setup(
         # ✅ Controllers YAML
         ("share/" + package_name + "/config",
             glob("space_panda_description/config/*.yaml")),
+
+        # ✅ Worlds
+        ("share/" + package_name + "/worlds",
+            glob("space_panda_description/worlds/*.sdf")),
+
+        # ✅ Models (Recursive include for models/...)
+        ("share/" + package_name + "/models/earth",
+            ["space_panda_description/models/earth/model.config", "space_panda_description/models/earth/model.sdf"]),
+        ("share/" + package_name + "/models/earth/materials/scripts",
+            glob("space_panda_description/models/earth/materials/scripts/*")),
+        ("share/" + package_name + "/models/earth/materials/textures",
+            glob("space_panda_description/models/earth/materials/textures/*")),
+        
+        ("share/" + package_name + "/models/sun",
+            ["space_panda_description/models/sun/model.config", "space_panda_description/models/sun/model.sdf"]),
+        ("share/" + package_name + "/models/sun/materials/scripts",
+            glob("space_panda_description/models/sun/materials/scripts/*")),
+        ("share/" + package_name + "/models/sun/materials/textures",
+            glob("space_panda_description/models/sun/materials/textures/*")),
     ],
 
     install_requires=["setuptools"],

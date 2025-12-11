@@ -1,0 +1,76 @@
+<?xml version="1.0" ?>
+<sdf version="1.8">
+  <world name="space_world">
+    
+    <!-- Zero Gravity for Space -->
+    <gravity>0 0 0</gravity>
+
+    <!-- Physics settings -->
+    <physics name="1ms" type="ignored">
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1.0</real_time_factor>
+      <real_time_update_rate>1000</real_time_update_rate>
+    </physics>
+
+    <!-- Scene: Deep Space Black -->
+    <scene>
+      <ambient>0.3 0.3 0.3 1.0</ambient> <!-- Increased ambient for fill lighting -->
+      <background>0.0 0.0 0.0 1.0</background>
+      <grid>false</grid>
+      <shadows>true</shadows>
+    </scene>
+
+    <!-- The Sun (Light Source) -->
+    <light type="directional" name="sun">
+      <cast_shadows>true</cast_shadows>
+      <pose>-200 200 100 0 0 0</pose>
+      <diffuse>1.0 1.0 1.0 1</diffuse>
+      <specular>0.8 0.8 0.8 1</specular>
+      <attenuation>
+        <range>10000</range>
+        <constant>1.0</constant>
+        <linear>0.0</linear>
+        <quadratic>0.0</quadratic>
+      </attenuation>
+      <!-- Direction pointing towards origin (0,0,0) from (-200, 200, 100) -->
+      <!-- Vector is (200, -200, -100). Normalized: (0.667, -0.667, -0.333) -->
+      <direction>0.667 -0.667 -0.333</direction>
+    </light>
+
+    <!-- The Sun (Visual Textured Sphere) -->
+    <model name="sun_visual">
+      <static>true</static>
+      <pose>-200 200 100 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <sphere>
+              <radius>20.0</radius>
+            </sphere>
+          </geometry>
+          <material>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+            <specular>1 1 1 1</specular>
+            <pbr>
+              <metal>
+                <albedo_map>model://sun/materials/textures/sun_texture.jpg</albedo_map>
+                <emissive_map>model://sun/materials/textures/sun_texture.jpg</emissive_map>
+              </metal>
+            </pbr>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- GUI Camera View -->
+    <gui fullscreen='0'>
+      <camera name='user_camera'>
+        <pose>4.9 -4.3 3.5 0 0.4 2.4</pose>
+        <view_controller>orbit</view_controller>
+        <projection_type>perspective</projection_type>
+      </camera>
+    </gui>
+  </world>
+</sdf>
+

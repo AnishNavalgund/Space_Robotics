@@ -27,9 +27,11 @@
     <!-- ✅ SIMPLE collision for stable physics -->
     <collision>
       <geometry>
-        <box size="0 0 0"/>
+        <!-- 1.5m box to match roughly with the visual scale and arm mounting height -->
+        <box size="1.5 1.5 1.5"/>
       </geometry>
-      <origin xyz="1.4 1.4 1.2"/>
+      <!-- Center the collision box -->
+      <origin xyz="0 0 0"/>
     </collision>
 
     <inertial>

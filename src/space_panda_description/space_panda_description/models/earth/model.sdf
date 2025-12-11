@@ -1,0 +1,23 @@
+<?xml version="1.0" ?>
+<sdf version="1.6">
+  <model name="earth">
+    <static>true</static>
+    <link name="link">
+      <visual name="visual">
+        <geometry>
+          <sphere>
+            <radius>6371000</radius> <!-- Realistic Earth radius in meters -->
+          </sphere>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://space_panda_description/models/earth/materials/scripts</uri>
+            <uri>model://space_panda_description/models/earth/materials/textures</uri>
+            <name>EarthMaterial</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+  </model>
+</sdf>
+

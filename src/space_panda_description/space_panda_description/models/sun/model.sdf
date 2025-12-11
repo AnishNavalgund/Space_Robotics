@@ -1,0 +1,23 @@
+<?xml version="1.0" ?>
+<sdf version="1.6">
+  <model name="sun">
+    <static>true</static>
+    <link name="link">
+      <visual name="visual">
+        <geometry>
+          <sphere>
+            <radius>696340000</radius> <!-- Realistic Sun radius in meters, might need scaling for sim visibility -->
+          </sphere>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://space_panda_description/models/sun/materials/scripts</uri>
+            <uri>model://space_panda_description/models/sun/materials/textures</uri>
+            <name>SunMaterial</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+  </model>
+</sdf>
+

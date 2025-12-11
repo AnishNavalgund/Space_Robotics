@@ -1,0 +1,15 @@
+material EarthMaterial
+{
+  technique
+  {
+    pass
+    {
+      texture_unit
+      {
+        texture ../textures/earth_diffuse.jpg
+        scale 1 1
+      }
+    }
+  }
+}
+
