@@ -39,12 +39,14 @@ setup(
             glob("space_panda_description/worlds/*.sdf")),
 
         # ✅ Models (Recursive include for models/...)
-        ("share/" + package_name + "/models/earth",
-            ["space_panda_description/models/earth/model.config", "space_panda_description/models/earth/model.sdf"]),
-        ("share/" + package_name + "/models/earth/materials/scripts",
-            glob("space_panda_description/models/earth/materials/scripts/*")),
-        ("share/" + package_name + "/models/earth/materials/textures",
-            glob("space_panda_description/models/earth/materials/textures/*")),
+        ("share/" + package_name + "/models/earth_high_res",
+            ["space_panda_description/models/earth_high_res/model.config", "space_panda_description/models/earth_high_res/model.sdf"]),
+        ("share/" + package_name + "/models/earth_high_res/materials/scripts",
+            glob("space_panda_description/models/earth_high_res/materials/scripts/*")),
+        ("share/" + package_name + "/models/earth_high_res/materials/textures",
+            glob("space_panda_description/models/earth_high_res/materials/textures/*")),
+        ("share/" + package_name + "/models/earth_high_res/resources",
+            glob("space_panda_description/models/earth_high_res/resources/*")),
         
         ("share/" + package_name + "/models/sun",
             ["space_panda_description/models/sun/model.config", "space_panda_description/models/sun/model.sdf"]),

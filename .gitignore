@@ -32,3 +32,5 @@ Makefile
 # WSL / Windows cruft
 Thumbs.db
 desktop.ini
+
+src/spaceros_gz_demos/
