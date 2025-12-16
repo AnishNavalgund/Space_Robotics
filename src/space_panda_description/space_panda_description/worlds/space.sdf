@@ -69,6 +69,316 @@
       <pose>0 0 -2000 0 0 0</pose>
     </include>
 
+    <!-- Space Debris -->
+    
+    <!-- Debris Piece 1: Small metallic box -->
+    <model name="debris_box_1">
+      <pose>2.5 1.5 1.2 0.3 0.5 0.2</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.15 0.1 0.08</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.4 0.4 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.6 1</diffuse>
+            <specular>0.8 0.8 0.9 1</specular>
+            <emissive>0.1 0.1 0.1 1</emissive>
+          </material>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.15 0.1 0.08</size>
+            </box>
+          </geometry>
+        </collision>
+        <inertial>
+          <mass>0.5</mass>
+          <inertia>
+            <ixx>0.0007</ixx>
+            <iyy>0.0012</iyy>
+            <izz>0.0014</izz>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyz>0</iyz>
+          </inertia>
+        </inertial>
+      </link>
+    </model>
+
+    <!-- Debris Piece 2: Cylindrical fragment -->
+    <model name="debris_cylinder_1">
+      <pose>-1.8 2.2 0.8 0.1 0.3 0.4</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <cylinder>
+              <radius>0.06</radius>
+              <length>0.2</length>
+            </cylinder>
+          </geometry>
+          <material>
+            <ambient>0.5 0.4 0.4 1</ambient>
+            <diffuse>0.6 0.5 0.5 1</diffuse>
+            <specular>0.7 0.7 0.8 1</specular>
+            <emissive>0.1 0.1 0.1 1</emissive>
+          </material>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <cylinder>
+              <radius>0.06</radius>
+              <length>0.2</length>
+            </cylinder>
+          </geometry>
+        </collision>
+        <inertial>
+          <mass>0.4</mass>
+          <inertia>
+            <ixx>0.0017</ixx>
+            <iyy>0.0017</iyy>
+            <izz>0.0007</izz>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyz>0</iyz>
+          </inertia>
+        </inertial>
+      </link>
+    </model>
+
+    <!-- Debris Piece 3: Small panel fragment -->
+    <model name="debris_panel_1">
+      <pose>1.2 -2.5 1.5 0.2 0.1 0.6</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.25 0.05 0.15</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.3 0.3 0.4 1</ambient>
+            <diffuse>0.4 0.4 0.5 1</diffuse>
+            <specular>0.9 0.9 0.9 1</specular>
+            <emissive>0.05 0.05 0.05 1</emissive>
+          </material>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.25 0.05 0.15</size>
+            </box>
+          </geometry>
+        </collision>
+        <inertial>
+          <mass>0.3</mass>
+          <inertia>
+            <ixx>0.0006</ixx>
+            <iyy>0.0021</iyy>
+            <izz>0.0016</izz>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyz>0</iyz>
+          </inertia>
+        </inertial>
+      </link>
+    </model>
+
+    <!-- Debris Piece 4: Small sphere (bolt/nut) -->
+    <model name="debris_sphere_1">
+      <pose>-2.0 -1.5 0.5 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <sphere>
+              <radius>0.04</radius>
+            </sphere>
+          </geometry>
+          <material>
+            <ambient>0.4 0.3 0.3 1</ambient>
+            <diffuse>0.5 0.4 0.4 1</diffuse>
+            <specular>0.6 0.6 0.7 1</specular>
+            <emissive>0.1 0.1 0.1 1</emissive>
+          </material>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <sphere>
+              <radius>0.04</radius>
+            </sphere>
+          </geometry>
+        </collision>
+        <inertial>
+          <mass>0.1</mass>
+          <inertia>
+            <ixx>0.000064</ixx>
+            <iyy>0.000064</iyy>
+            <izz>0.000064</izz>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyz>0</iyz>
+          </inertia>
+        </inertial>
+      </link>
+    </model>
+
+    <!-- Debris Piece 5: Irregular chunk -->
+    <model name="debris_chunk_1">
+      <pose>0.5 3.0 0.3 0.4 0.2 0.1</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.12 0.12 0.1</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.35 0.35 0.4 1</ambient>
+            <diffuse>0.45 0.45 0.5 1</diffuse>
+            <specular>0.7 0.7 0.8 1</specular>
+            <emissive>0.08 0.08 0.08 1</emissive>
+          </material>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.12 0.12 0.1</size>
+            </box>
+          </geometry>
+        </collision>
+        <inertial>
+          <mass>0.4</mass>
+          <inertia>
+            <ixx>0.0008</ixx>
+            <iyy>0.0008</iyy>
+            <izz>0.001</izz>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyz>0</iyz>
+          </inertia>
+        </inertial>
+      </link>
+    </model>
+
+    <!-- Debris Piece 6: Long rod fragment -->
+    <model name="debris_rod_1">
+      <pose>-1.5 -2.8 1.8 0.5 0.3 0.2</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <cylinder>
+              <radius>0.025</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+          <material>
+            <ambient>0.4 0.4 0.45 1</ambient>
+            <diffuse>0.5 0.5 0.55 1</diffuse>
+            <specular>0.8 0.8 0.85 1</specular>
+            <emissive>0.1 0.1 0.1 1</emissive>
+          </material>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <cylinder>
+              <radius>0.025</radius>
+              <length>0.3</length>
+            </cylinder>
+          </geometry>
+        </collision>
+        <inertial>
+          <mass>0.2</mass>
+          <inertia>
+            <ixx>0.0015</ixx>
+            <iyy>0.0015</iyy>
+            <izz>0.0000625</izz>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyz>0</iyz>
+          </inertia>
+        </inertial>
+      </link>
+    </model>
+
+    <!-- Debris Piece 7: Small metallic cube -->
+    <model name="debris_cube_1">
+      <pose>3.2 -1.2 0.6 0.2 0.4 0.3</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.1 0.1 0.1</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.45 0.4 0.35 1</ambient>
+            <diffuse>0.55 0.5 0.45 1</diffuse>
+            <specular>0.75 0.75 0.8 1</specular>
+            <emissive>0.1 0.1 0.1 1</emissive>
+          </material>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.1 0.1 0.1</size>
+            </box>
+          </geometry>
+        </collision>
+        <inertial>
+          <mass>0.3</mass>
+          <inertia>
+            <ixx>0.0005</ixx>
+            <iyy>0.0005</iyy>
+            <izz>0.0005</izz>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyz>0</iyz>
+          </inertia>
+        </inertial>
+      </link>
+    </model>
+
+    <!-- Debris Piece 8: Thin plate -->
+    <model name="debris_plate_1">
+      <pose>-2.5 1.0 1.3 0.1 0.5 0.3</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.18 0.18 0.04</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.3 0.35 0.4 1</ambient>
+            <diffuse>0.4 0.45 0.5 1</diffuse>
+            <specular>0.85 0.85 0.9 1</specular>
+            <emissive>0.05 0.05 0.05 1</emissive>
+          </material>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.18 0.18 0.04</size>
+            </box>
+          </geometry>
+        </collision>
+        <inertial>
+          <mass>0.2</mass>
+          <inertia>
+            <ixx>0.0006</ixx>
+            <iyy>0.0006</iyy>
+            <izz>0.0001</izz>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyz>0</iyz>
+          </inertia>
+        </inertial>
+      </link>
+    </model>
+
     <!-- GUI Camera View -->
     <gui fullscreen='0'>
       <camera name='user_camera'>
