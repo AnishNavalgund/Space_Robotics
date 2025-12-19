@@ -67,6 +67,8 @@ setup(
     entry_points={
         "console_scripts": [
             "pick_place_demo = space_panda_description.pick_place_demo:main",
+            "orbital_controller = space_panda_description.orbital_controller:main",
+            "arm_demo = space_panda_description.arm_demo:main",
         ],
     },
 )

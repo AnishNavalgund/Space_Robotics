@@ -7,10 +7,8 @@
   <xacro:property name="load_gripper" value="true"/>
   <xacro:property name="ee_id" value="franka_hand"/>
 
-  <!-- ================= WORLD ================= -->
-  <link name="world"/>
-
-  <!-- ================= SATELLITE ================= -->
+  <!-- ================= SATELLITE BASE (ROOT LINK) ================= -->
+  <!-- No world link needed - satellite_base is the root, allowing free motion in space -->
   <link name="satellite_base">
 
     <visual>
@@ -45,15 +43,10 @@
 
   </link>
 
-  <!-- World → Satellite -->
+  <!-- Satellite is dynamic (can move freely in space) -->
   <gazebo reference="satellite_base">
-    <static>true</static>
+    <static>false</static>
   </gazebo>
-
-  <joint name="world_to_satellite" type="fixed">
-    <parent link="world"/>
-    <child link="satellite_base"/>
-  </joint>
 
   <!-- ================= FR3 ROBOT ================= -->
 
@@ -77,67 +70,233 @@
     connected_to=""
   />
 
-  <!-- ================= ROS2 CONTROL ================= -->
-  <ros2_control name="FR3System" type="system">
+  <!-- ================= GAZEBO PLUGINS FOR CONTROL ================= -->
+  
+  <!-- Odometry Publisher for Satellite -->
+  <gazebo>
+    <plugin name="odometry_publisher" filename="gz-sim-odometry-publisher-system">
+      <dimensions>3</dimensions>
+      <odom_publish_frequency>50.0</odom_publish_frequency>
+      <odom_frame>world</odom_frame>
+      <robot_base_frame>satellite_base</robot_base_frame>
+    </plugin>
+  </gazebo>
 
-    <hardware>
-      <plugin>gazebo_ros2_control/GazeboSystem</plugin>
-    </hardware>
+  <!-- Joint Position Controllers for FR3 Arm -->
+  <gazebo>
+    <plugin filename="gz-sim-joint-position-controller-system"
+            name="gz::sim::systems::JointPositionController">
+      <joint_name>fr3_joint1</joint_name>
+      <topic>fr3/joint1_cmd</topic>
+      <p_gain>100</p_gain>
+      <i_gain>10</i_gain>
+      <d_gain>5</d_gain>
+      <i_max>10</i_max>
+      <i_min>-10</i_min>
+      <cmd_max>2.8973</cmd_max>
+      <cmd_min>-2.8973</cmd_min>
+    </plugin>
+  </gazebo>
 
-    <!-- Arm joints -->
-    <joint name="fr3_joint1">
-      <command_interface name="position"/>
-      <state_interface name="position"/>
-      <state_interface name="velocity"/>
-    </joint>
+  <gazebo>
+    <plugin filename="gz-sim-joint-position-controller-system"
+            name="gz::sim::systems::JointPositionController">
+      <joint_name>fr3_joint2</joint_name>
+      <topic>fr3/joint2_cmd</topic>
+      <p_gain>100</p_gain>
+      <i_gain>10</i_gain>
+      <d_gain>5</d_gain>
+      <i_max>10</i_max>
+      <i_min>-10</i_min>
+      <cmd_max>1.7628</cmd_max>
+      <cmd_min>-1.7628</cmd_min>
+    </plugin>
+  </gazebo>
 
-    <joint name="fr3_joint2">
-      <command_interface name="position"/>
-      <state_interface name="position"/>
-      <state_interface name="velocity"/>
-    </joint>
+  <gazebo>
+    <plugin filename="gz-sim-joint-position-controller-system"
+            name="gz::sim::systems::JointPositionController">
+      <joint_name>fr3_joint3</joint_name>
+      <topic>fr3/joint3_cmd</topic>
+      <p_gain>100</p_gain>
+      <i_gain>10</i_gain>
+      <d_gain>5</d_gain>
+      <i_max>10</i_max>
+      <i_min>-10</i_min>
+      <cmd_max>2.8973</cmd_max>
+      <cmd_min>-2.8973</cmd_min>
+    </plugin>
+  </gazebo>
 
-    <joint name="fr3_joint3">
-      <command_interface name="position"/>
-      <state_interface name="position"/>
-      <state_interface name="velocity"/>
-    </joint>
+  <gazebo>
+    <plugin filename="gz-sim-joint-position-controller-system"
+            name="gz::sim::systems::JointPositionController">
+      <joint_name>fr3_joint4</joint_name>
+      <topic>fr3/joint4_cmd</topic>
+      <p_gain>100</p_gain>
+      <i_gain>10</i_gain>
+      <d_gain>5</d_gain>
+      <i_max>10</i_max>
+      <i_min>-10</i_min>
+      <cmd_max>-0.0698</cmd_max>
+      <cmd_min>-3.0718</cmd_min>
+    </plugin>
+  </gazebo>
 
-    <joint name="fr3_joint4">
-      <command_interface name="position"/>
-      <state_interface name="position"/>
-      <state_interface name="velocity"/>
-    </joint>
+  <gazebo>
+    <plugin filename="gz-sim-joint-position-controller-system"
+            name="gz::sim::systems::JointPositionController">
+      <joint_name>fr3_joint5</joint_name>
+      <topic>fr3/joint5_cmd</topic>
+      <p_gain>100</p_gain>
+      <i_gain>10</i_gain>
+      <d_gain>5</d_gain>
+      <i_max>10</i_max>
+      <i_min>-10</i_min>
+      <cmd_max>2.8973</cmd_max>
+      <cmd_min>-2.8973</cmd_min>
+    </plugin>
+  </gazebo>
 
-    <joint name="fr3_joint5">
-      <command_interface name="position"/>
-      <state_interface name="position"/>
-      <state_interface name="velocity"/>
-    </joint>
+  <gazebo>
+    <plugin filename="gz-sim-joint-position-controller-system"
+            name="gz::sim::systems::JointPositionController">
+      <joint_name>fr3_joint6</joint_name>
+      <topic>fr3/joint6_cmd</topic>
+      <p_gain>100</p_gain>
+      <i_gain>10</i_gain>
+      <d_gain>5</d_gain>
+      <i_max>10</i_max>
+      <i_min>-10</i_min>
+      <cmd_max>3.7525</cmd_max>
+      <cmd_min>-0.0175</cmd_min>
+    </plugin>
+  </gazebo>
 
-    <joint name="fr3_joint6">
-      <command_interface name="position"/>
-      <state_interface name="position"/>
-      <state_interface name="velocity"/>
-    </joint>
+  <gazebo>
+    <plugin filename="gz-sim-joint-position-controller-system"
+            name="gz::sim::systems::JointPositionController">
+      <joint_name>fr3_joint7</joint_name>
+      <topic>fr3/joint7_cmd</topic>
+      <p_gain>100</p_gain>
+      <i_gain>10</i_gain>
+      <d_gain>5</d_gain>
+      <i_max>10</i_max>
+      <i_min>-10</i_min>
+      <cmd_max>2.8973</cmd_max>
+      <cmd_min>-2.8973</cmd_min>
+    </plugin>
+  </gazebo>
 
-    <joint name="fr3_joint7">
-      <command_interface name="position"/>
-      <state_interface name="position"/>
-      <state_interface name="velocity"/>
-    </joint>
+  <!-- Gripper Controllers -->
+  <gazebo>
+    <plugin filename="gz-sim-joint-position-controller-system"
+            name="gz::sim::systems::JointPositionController">
+      <joint_name>fr3_finger_joint1</joint_name>
+      <topic>fr3/gripper_cmd</topic>
+      <p_gain>50</p_gain>
+      <i_gain>5</i_gain>
+      <d_gain>1</d_gain>
+      <i_max>5</i_max>
+      <i_min>-5</i_min>
+      <cmd_max>0.04</cmd_max>
+      <cmd_min>0.0</cmd_min>
+    </plugin>
+  </gazebo>
 
-    <!-- ✅ GRIPPER (FIXED MIMIC BUG) -->
-    <joint name="fr3_finger_joint1">
-      <command_interface name="position"/>
-      <state_interface name="position"/>
-    </joint>
+  <!-- Thrusters for orbital adjustments -->
+  <link name="forward_thruster">
+    <inertial>
+      <mass value="0.01"/>
+      <origin xyz="0 0 0"/>
+      <inertia
+        ixx="0.0001" ixy="0" ixz="0"
+        iyy="0.0001" iyz="0"
+        izz="0.0001"/>
+    </inertial>
+  </link>
 
-    <!-- ✅ Mimic joint MUST NOT have command interface -->
-    <joint name="fr3_finger_joint2">
-      <state_interface name="position"/>
-    </joint>
+  <joint name="forward_thruster_joint" type="revolute">
+    <parent link="satellite_base"/>
+    <child link="forward_thruster"/>
+    <origin xyz="0 0 0"/>
+    <axis xyz="1 0 0"/>
+    <limit lower="-1e16" upper="1e16" effort="1000" velocity="1000"/>
+  </joint>
 
-  </ros2_control>
+  <link name="lateral_thruster">
+    <inertial>
+      <mass value="0.01"/>
+      <origin xyz="0 0 0"/>
+      <inertia
+        ixx="0.0001" ixy="0" ixz="0"
+        iyy="0.0001" iyz="0"
+        izz="0.0001"/>
+    </inertial>
+  </link>
+
+  <joint name="lateral_thruster_joint" type="revolute">
+    <parent link="satellite_base"/>
+    <child link="lateral_thruster"/>
+    <origin xyz="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-1e16" upper="1e16" effort="1000" velocity="1000"/>
+  </joint>
+
+  <link name="vertical_thruster">
+    <inertial>
+      <mass value="0.01"/>
+      <origin xyz="0 0 0"/>
+      <inertia
+        ixx="0.0001" ixy="0" ixz="0"
+        iyy="0.0001" iyz="0"
+        izz="0.0001"/>
+    </inertial>
+  </link>
+
+  <joint name="vertical_thruster_joint" type="revolute">
+    <parent link="satellite_base"/>
+    <child link="vertical_thruster"/>
+    <origin xyz="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-1e16" upper="1e16" effort="1000" velocity="1000"/>
+  </joint>
+
+  <!-- Thruster Plugins -->
+  <gazebo>
+    <plugin filename="gz-sim-thruster-system"
+            name="gz::sim::systems::Thruster">
+      <joint_name>forward_thruster_joint</joint_name>
+      <thrust_coefficient>0.01</thrust_coefficient>
+      <fluid_density>1.0</fluid_density>
+      <propeller_diameter>0.5</propeller_diameter>
+      <max_thrust_cmd>100</max_thrust_cmd>
+      <min_thrust_cmd>-100</min_thrust_cmd>
+    </plugin>
+  </gazebo>
+
+  <gazebo>
+    <plugin filename="gz-sim-thruster-system"
+            name="gz::sim::systems::Thruster">
+      <joint_name>lateral_thruster_joint</joint_name>
+      <thrust_coefficient>0.01</thrust_coefficient>
+      <fluid_density>1.0</fluid_density>
+      <propeller_diameter>0.5</propeller_diameter>
+      <max_thrust_cmd>100</max_thrust_cmd>
+      <min_thrust_cmd>-100</min_thrust_cmd>
+    </plugin>
+  </gazebo>
+
+  <gazebo>
+    <plugin filename="gz-sim-thruster-system"
+            name="gz::sim::systems::Thruster">
+      <joint_name>vertical_thruster_joint</joint_name>
+      <thrust_coefficient>0.01</thrust_coefficient>
+      <fluid_density>1.0</fluid_density>
+      <propeller_diameter>0.5</propeller_diameter>
+      <max_thrust_cmd>100</max_thrust_cmd>
+      <min_thrust_cmd>-100</min_thrust_cmd>
+    </plugin>
+  </gazebo>
 
 </robot>
