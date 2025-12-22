@@ -46,6 +46,41 @@
   <!-- Satellite is dynamic (can move freely in space) -->
   <gazebo reference="satellite_base">
     <static>false</static>
+    
+    <!-- Camera sensor to view arm/gripper and Earth -->
+    <sensor name="satellite_camera" type="camera">
+      <!-- Position: Side-mounted to see arm clearly
+           Camera mounted to the SIDE of satellite
+           Looking across toward the arm with Earth as backdrop
+           X: -0.5m (back from center, away from Earth)
+           Y: -0.8m (to the side - left of arm)  
+           Z: 0.9m (at mid-arm height)
+           Yaw: 0.5 rad (~30°) to look at arm from angle
+           Pitch: 0.1 rad (slight down angle)
+           This gives oblique view: arm in foreground, Earth in background -->
+      <pose>-0.5 -0.8 0.9 0 0.1 0.5</pose>  <!-- Side-angled view of arm -->
+      <camera>
+        <horizontal_fov>1.5708</horizontal_fov>  <!-- 90 degrees FOV -->
+        <image>
+          <width>1280</width>
+          <height>720</height>
+          <format>R8G8B8</format>
+        </image>
+        <clip>
+          <near>0.1</near>
+          <far>10000</far>  <!-- Can see very far to capture Earth -->
+        </clip>
+        <noise>
+          <type>gaussian</type>
+          <mean>0.0</mean>
+          <stddev>0.007</stddev>
+        </noise>
+      </camera>
+      <always_on>1</always_on>
+      <update_rate>30</update_rate>
+      <visualize>true</visualize>
+      <topic>satellite_camera</topic>
+    </sensor>
   </gazebo>
 
   <!-- ================= FR3 ROBOT ================= -->

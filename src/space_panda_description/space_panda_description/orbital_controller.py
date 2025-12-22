@@ -135,9 +135,9 @@ class OrbitalController(Node):
         # Compute radius error
         radius_error = self.orbit_radius - current_radius
         
-        # Control gains
-        Kp_tangent = 10.0  # Proportional gain for tangential velocity
-        Kp_radial = 5.0    # Proportional gain for radius correction
+        # Control gains (increased for more responsive control)
+        Kp_tangent = 20.0  # Proportional gain for tangential velocity
+        Kp_radial = 10.0   # Proportional gain for radius correction
         
         # Compute thrust commands
         # Tangential thrust (forward/lateral)
@@ -178,17 +178,23 @@ class OrbitalController(Node):
         """Give initial velocity to start orbital motion"""
         self.get_logger().info("Initializing orbital velocity...")
         
-        # Compute initial tangential velocity
-        target_vel, _, _ = self.compute_orbital_velocity(self.current_pos)
+        # Compute initial tangential velocity direction
+        target_vel, radial, current_radius = self.compute_orbital_velocity(self.current_pos)
         
-        # Apply strong initial thrust to achieve orbital velocity
-        forward_msg = Float64()
-        forward_msg.data = 80.0  # Strong initial thrust
-        self.forward_thrust_pub.publish(forward_msg)
+        self.get_logger().info(
+            f"Initial conditions - Position: ({self.current_pos[0]:.1f}, {self.current_pos[1]:.1f}, {self.current_pos[2]:.1f}), "
+            f"Target tangential velocity: ({target_vel[0]:.2f}, {target_vel[1]:.2f}, {target_vel[2]:.2f})"
+        )
         
+        # Apply initial thrust in tangential direction to start orbit
+        # Use higher thrust values for faster startup
         lateral_msg = Float64()
-        lateral_msg.data = 0.0
+        lateral_msg.data = 100.0  # Strong initial thrust in Y direction (tangential)
         self.lateral_thrust_pub.publish(lateral_msg)
+        
+        forward_msg = Float64()
+        forward_msg.data = 0.0
+        self.forward_thrust_pub.publish(forward_msg)
         
         vertical_msg = Float64()
         vertical_msg.data = 0.0
