@@ -71,6 +71,7 @@ setup(
             "arm_demo = space_panda_description.arm_demo:main",
             "camera_controller = space_panda_description.camera_controller:main",
             "camera_system = space_panda_description.camera_control_viewer:main",
+            "arm_controller = space_panda_description.arm_joint_controller:main",
         ],
     },
 )
