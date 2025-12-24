@@ -103,7 +103,7 @@ class CameraControlViewer(QWidget):
         azimuth_group = QGroupBox('Azimuth - Horizontal Control')
         azimuth_layout = QVBoxLayout()
         
-        self.azimuth_label = QLabel('0°')
+        self.azimuth_label = QLabel('0')
         self.azimuth_label.setAlignment(Qt.AlignCenter)
         azimuth_label_font = QFont()
         azimuth_label_font.setPointSize(14)
@@ -131,7 +131,7 @@ class CameraControlViewer(QWidget):
         elevation_group = QGroupBox('Elevation - Vertical Control')
         elevation_layout = QVBoxLayout()
         
-        self.elevation_label = QLabel('0°')
+        self.elevation_label = QLabel('0')
         self.elevation_label.setAlignment(Qt.AlignCenter)
         elevation_label_font = QFont()
         elevation_label_font.setPointSize(14)
@@ -244,13 +244,13 @@ class CameraControlViewer(QWidget):
     def update_azimuth(self, value):
         """Update azimuth angle from slider"""
         self.current_azimuth = math.radians(value)
-        self.azimuth_label.setText(f'{value}°')
+        self.azimuth_label.setText(f'{value}')
         self.publish_camera_angles()
         
     def update_elevation(self, value):
         """Update elevation angle from slider"""
         self.current_elevation = math.radians(value)
-        self.elevation_label.setText(f'{value}°')
+        self.elevation_label.setText(f'{value}')
         self.publish_camera_angles()
         
     def publish_camera_angles(self):
