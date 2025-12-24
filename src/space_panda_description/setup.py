@@ -70,8 +70,7 @@ setup(
             "orbital_controller = space_panda_description.orbital_controller:main",
             "arm_demo = space_panda_description.arm_demo:main",
             "camera_controller = space_panda_description.camera_controller:main",
-            "camera_gui = space_panda_description.camera_gui_controller:main",
-            "camera_opencv_view = space_panda_description.camera_opencv_viewer:main",
+            "camera_system = space_panda_description.camera_control_viewer:main",
         ],
     },
 )
