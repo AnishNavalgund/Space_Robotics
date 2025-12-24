@@ -64,6 +64,10 @@ def generate_launch_description():
             "/satellite_camera@sensor_msgs/msg/Image@gz.msgs.Image",
             "/satellite_camera/camera_info@sensor_msgs/msg/CameraInfo@gz.msgs.CameraInfo",
             
+            # Pan-Tilt Camera Control
+            "/camera/azimuth_cmd@std_msgs/msg/Float64@gz.msgs.Double",
+            "/camera/elevation_cmd@std_msgs/msg/Float64@gz.msgs.Double",
+            
             # Arm joint commands
             "/fr3/joint1_cmd@std_msgs/msg/Float64@gz.msgs.Double",
             "/fr3/joint2_cmd@std_msgs/msg/Float64@gz.msgs.Double",

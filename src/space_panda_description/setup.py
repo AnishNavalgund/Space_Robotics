@@ -18,27 +18,27 @@ setup(
         ("share/" + package_name,
             ["package.xml"]),
 
-        # ✅ URDF
+        # URDF
         ("share/" + package_name + "/urdf",
             glob("space_panda_description/urdf/*.xacro")),
 
-        # ✅ Launch files
+        # Launch files
         ("share/" + package_name + "/launch",
             glob("space_panda_description/launch/*.launch.py")),
 
-        # ✅ ✅ ✅ MESHES (THIS WAS YOUR MAIN BUG)
+        # MESHES
         ("share/" + package_name + "/meshes",
             glob("meshes/*.stl")),
 
-        # ✅ Controllers YAML
+        # Controllers YAML
         ("share/" + package_name + "/config",
             glob("space_panda_description/config/*.yaml")),
 
-        # ✅ Worlds
+        # Worlds
         ("share/" + package_name + "/worlds",
             glob("space_panda_description/worlds/*.sdf")),
 
-        # ✅ Models (Recursive include for models/...)
+        # Models 
         ("share/" + package_name + "/models/earth_high_res",
             ["space_panda_description/models/earth_high_res/model.config", "space_panda_description/models/earth_high_res/model.sdf"]),
         ("share/" + package_name + "/models/earth_high_res/materials/scripts",
@@ -59,8 +59,8 @@ setup(
     install_requires=["setuptools"],
     zip_safe=True,
 
-    maintainer="anish",
-    maintainer_email="anishk.navalgund@gmail.com",
+    maintainer="AnishNavalgund",
+    maintainer_email="anish.navalgund@space-ts.com",
     description="Space-mounted Franka FR3 description",
     license="Apache-2.0",
 
@@ -69,6 +69,9 @@ setup(
             "pick_place_demo = space_panda_description.pick_place_demo:main",
             "orbital_controller = space_panda_description.orbital_controller:main",
             "arm_demo = space_panda_description.arm_demo:main",
+            "camera_controller = space_panda_description.camera_controller:main",
+            "camera_gui = space_panda_description.camera_gui_controller:main",
+            "camera_opencv_view = space_panda_description.camera_opencv_viewer:main",
         ],
     },
 )
